@@ -11,7 +11,6 @@ const processor = (testResults: TestResults, optionalProcessing?: (testResults: 
     var failedTests = [];
     testData.filter(function (item) {
         item.testResults.filter(function (test) {
-            console.log(test)
             if(test.status === "failed"){
                 var err = test.failureMessages[0].replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
                 var expected = err.search("Expected");
