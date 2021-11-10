@@ -44,6 +44,7 @@ interface TestReport {
     numPassingTests: number;
     numPendingTests: number;
     testResults: Array<TestResult>;
+    failureMessages: string;
 }
 
 export interface TestResults {
@@ -67,6 +68,7 @@ interface FailedTestField{
 export interface FailedTest{
     color: string;
     title: string;
+    text: string;
     fields: Array<FailedTestField>
 }
 

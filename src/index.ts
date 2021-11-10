@@ -7,6 +7,11 @@ const processor = (testResults: TestResults, optionalProcessing?: (testResults: 
         throw new Error("Please provide a Slack webhookUrl field as an env variable — WEBHOOK_URL");
     }
 
+    const err = testResults.testResults[0].failureMessages.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
+    const expected = err.search("Expected") ;
+    const received = err.search("Received") ;
+    const errorText = err.substring(expected, expected+15) +'\n'+ err.substring(received, received+15);
+
     const testData = testResults.testResults;
 
     let failedTests: Array<FailedTest> = [];
@@ -16,6 +21,7 @@ const processor = (testResults: TestResults, optionalProcessing?: (testResults: 
             return test.status === "failed" ? failedTests.push({
                 "color": "#ff0000",
                 "title": test.fullName,
+                "text": errorText,
                 "fields": [
                     {
                         "value": 'Failed',
